@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Detector | Universal Model</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Universal <span>Deepfake</span> Detector</h1>
+            <p>Upload an image or video to test if it is real or AI-generated.</p>
+        </header>
+
+        <main class="glass-panel">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*,video/*" hidden>
+                <div class="upload-content">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h3>Drag & Drop your image or video here</h3>
+                    <p>or</p>
+                    <button class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                </div>
+                <div class="preview-area hidden" id="previewArea">
+                    <img id="imagePreview" src="" alt="Preview" class="hidden">
+                    <video id="videoPreview" src="" controls class="hidden" style="max-width: 100%; max-height: 350px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid var(--glass-border);"></video>
+                    <button class="btn btn-secondary" id="changeImageBtn">Change File</button>
+                </div>
+            </div>
+
+            <div class="analyze-section">
+                <button class="btn btn-primary analyze-btn disabled" id="analyzeBtn" disabled>
+                    <i class="fa-solid fa-microchip"></i> Analyze Media
+                </button>
+            </div>
+
+            <div class="results-area hidden" id="resultsArea">
+                <div class="loader-container hidden" id="loader">
+                    <div class="spinner"></div>
+                    <p>Analyzing with Universal CLIP:ViT-L/14 model...</p>
+                </div>
+                
+                <div class="prediction-card hidden" id="predictionCard">
+                    <h2 class="prediction-title">Prediction Result</h2>
+                    
+                    <div class="score-display">
+                        <div class="score-circle" id="scoreCircle">
+                            <span class="score-value" id="scoreValue">98%</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="verdict" id="verdict">REAL</h1>
+                    
+                    <div class="score-bar-container">
+                        <div class="score-labels">
+                            <span>Real</span>
+                            <span>Fake</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" id="scoreFill"></div>
+                            <div class="score-marker" id="scoreMarker"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="details" id="detailsText">Raw score: 0.00</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Based on Universal Fake Image Detectors (CVPR 2023)</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
