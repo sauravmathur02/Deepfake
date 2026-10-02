@@ -1,0 +1,13 @@
+torch
+torchvision
+fastapi
+uvicorn
+python-multipart
+Pillow
+opencv-python
+scipy
+tqdm
+scikit-learn
+ftfy
+regex
+packaging
