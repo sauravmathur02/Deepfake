@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepfake Detector | Ensemble AI Model</title>
+    <meta name="description" content="Forensic deepfake detection dashboard: bulk image and video analysis with ensemble AI models and feedback-based calibration.">
+    <title>Universal Synthetic Media Detector | Forensic Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,94 +18,175 @@
     <div class="container">
         <header>
             <div class="badge">3-Layer Ensemble Detection</div>
-            <h1>Universal <span>Deepfake</span> Detector</h1>
-            <p>Upload an image or video to test if it is real or AI-generated.</p>
+            <h1>Universal <span>Synthetic Media</span> Detector</h1>
+            <p>Advanced Multi-Model AI Forensics for Images and Face-Swapped Videos.</p>
         </header>
 
-        <main class="glass-panel">
-            <div class="upload-area" id="uploadArea">
-                <input type="file" id="fileInput" accept="image/*,video/*" hidden>
-                <div class="upload-content">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <h3>Drag & Drop your image or video here</h3>
-                    <p>Supports JPG, PNG, MP4, MOV, AVI</p>
-                    <button class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+        <div class="dashboard">
+            <!-- ═══ Sidebar: controls ═══ -->
+            <aside class="sidebar">
+                <section class="glass-panel panel-upload">
+                    <h2 class="panel-title"><i class="fa-solid fa-upload"></i> Input</h2>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept="image/*,video/*" multiple hidden>
+                        <div class="upload-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h3>Drop images or videos</h3>
+                            <p>JPG, PNG, MP4, MOV, AVI · single or bulk</p>
+                            <button class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                        </div>
+                        <div class="preview-area hidden" id="previewArea">
+                            <div class="media-wrapper" style="position:relative; width:fit-content; margin:0 auto; overflow:hidden; border-radius:12px;">
+                                <img id="imagePreview" src="" alt="Preview" class="hidden">
+                                <video id="videoPreview" src="" controls class="hidden"></video>
+                                <div class="laser-scanner hidden" id="laserScanner"></div>
+                            </div>
+                            <div id="fileMetadata" class="file-metadata"></div>
+                            <button class="btn btn-secondary" id="changeImageBtn">Change File</button>
+                        </div>
+                        <div class="bulk-preview-area hidden" id="bulkPreviewArea">
+                            <div class="bulk-icon"><i class="fa-solid fa-layer-group"></i></div>
+                            <h3 id="bulkCountText">5 files selected</h3>
+                            <p>Ready for batch analysis.</p>
+                            <button class="btn btn-secondary" id="bulkChangeBtn">Clear Files</button>
+                        </div>
+                    </div>
+                    <div class="analyze-section">
+                        <button class="btn btn-primary analyze-btn disabled" id="analyzeBtn" disabled>
+                            <i class="fa-solid fa-microchip"></i> Analyze Media
+                        </button>
+                    </div>
+                </section>
+
+                <section class="glass-panel panel-stats hidden" id="statsPanel">
+                    <h2 class="panel-title"><i class="fa-solid fa-chart-pie"></i> Live Summary</h2>
+                    <div class="tally">
+                        <div class="tally-box real"><span id="tallyReal">0</span><small>Real</small></div>
+                        <div class="tally-box fake"><span id="tallyFake">0</span><small>Fake</small></div>
+                    </div>
+                    <p class="hint">Hover a thumbnail, then mark each verdict <b>Correct</b> or <b>Wrong</b>.</p>
+                    <button class="btn btn-secondary btn-block" id="generateReportBtn" style="display:none;" onclick="generateEvaluationReport()">
+                        <i class="fa-solid fa-clipboard-check"></i> Generate Evaluation Report
+                    </button>
+
+                    <div id="evaluationReport" class="eval-report hidden">
+                        <h3>Model Evaluation Report</h3>
+                        <div id="evalStats" class="eval-stats"></div>
+                        <button class="btn btn-primary btn-block" id="calibrateBtn" onclick="calibrateModel()">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Feedback for Review
+                        </button>
+                        <p class="hint" id="calibrateMsg"></p>
+                    </div>
+                </section>
+            </aside>
+
+            <!-- ═══ Main: results ═══ -->
+            <main class="main-panel glass-panel">
+                <div class="empty-state" id="emptyState">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>No analysis yet</h3>
+                    <p>Add files on the left and press <b>Analyze Media</b>. Results appear here.</p>
                 </div>
-                <div class="preview-area hidden" id="previewArea">
-                    <img id="imagePreview" src="" alt="Preview" class="hidden">
-                    <video id="videoPreview" src="" controls class="hidden" style="max-width:100%;max-height:320px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.3);border:1px solid var(--glass-border);"></video>
-                    <button class="btn btn-secondary" id="changeImageBtn">Change File</button>
-                </div>
-            </div>
 
-            <div class="analyze-section">
-                <button class="btn btn-primary analyze-btn disabled" id="analyzeBtn" disabled>
-                    <i class="fa-solid fa-microchip"></i> Analyze Media
-                </button>
-            </div>
-
-            <div class="results-area hidden" id="resultsArea">
-                <div class="loader-container hidden" id="loader">
-                    <div class="spinner"></div>
-                    <p id="loaderText">Running 3-layer ensemble analysis...</p>
-                </div>
-
-                <div class="prediction-card hidden" id="predictionCard">
-                    <h2 class="prediction-title">Ensemble Verdict</h2>
-
-                    <div class="score-display">
-                        <div class="score-circle" id="scoreCircle">
-                            <span class="score-value" id="scoreValue">—</span>
+                <!-- Single Result Area -->
+                <div class="results-area hidden" id="resultsArea">
+                    <div class="analysis-process hidden" id="analysisProcess">
+                        <div class="scanner-container"><div class="scanner-bar"></div></div>
+                        <div class="steps-container">
+                            <div class="step" id="step1">
+                                <div class="step-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                                <div class="step-text">Initializing forensic analysis...</div>
+                            </div>
+                            <div class="step pending" id="step2">
+                                <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
+                                <div class="step-text">Extracting metadata &amp; C2PA signatures</div>
+                            </div>
+                            <div class="step pending" id="step3">
+                                <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
+                                <div class="step-text">Running Community Forensics ViT-S model</div>
+                            </div>
+                            <div class="step pending" id="step4">
+                                <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
+                                <div class="step-text">Cross-referencing B-Free signals</div>
+                            </div>
+                            <div class="step pending" id="step5">
+                                <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
+                                <div class="step-text">Synthesizing final ensemble verdict</div>
+                            </div>
                         </div>
                     </div>
 
-                    <h1 class="verdict" id="verdict">REAL</h1>
+                    <div class="prediction-card hidden" id="predictionCard">
+                        <h2 class="prediction-title">Ensemble Verdict</h2>
+                        <div class="score-display">
+                            <div class="score-circle" id="scoreCircle"><span class="score-value" id="scoreValue">—</span></div>
+                        </div>
+                        <h1 class="verdict" id="verdict">REAL</h1>
+                        <div class="score-bar-container">
+                            <div class="score-labels"><span>Real</span><span>Fake</span></div>
+                            <div class="score-bar"><div class="score-marker" id="scoreMarker"></div></div>
+                        </div>
+                        <div class="detectors-grid">
+                            <div class="detector-card" id="card-commfor">
+                                <div class="detector-icon"><i class="fa-solid fa-brain"></i></div>
+                                <div class="detector-info">
+                                    <span class="detector-name">Community Forensics (2025)</span>
+                                    <span class="detector-desc">SotA ViT model</span>
+                                </div>
+                                <div class="detector-score" id="commforScore">—</div>
+                            </div>
+                            <div class="detector-card" id="card-bfree">
+                                <div class="detector-icon"><i class="fa-solid fa-robot"></i></div>
+                                <div class="detector-info">
+                                    <span class="detector-name">B-Free (2025)</span>
+                                    <span class="detector-desc">DINOv2 Bias-Free Vision Transformer</span>
+                                </div>
+                                <div class="detector-score" id="bfreeScore">—</div>
+                            </div>
+                            <div class="detector-card" id="card-prov">
+                                <div class="detector-icon"><i class="fa-solid fa-file-signature"></i></div>
+                                <div class="detector-info">
+                                    <span class="detector-name">Provenance &amp; Metadata</span>
+                                    <span class="detector-desc">C2PA / EXIF / PNG Tags</span>
+                                </div>
+                                <div class="detector-score" id="provScore">—</div>
+                            </div>
+                            <div class="detector-card" id="card-gend" style="display: none;">
+                                <div class="detector-icon"><i class="fa-solid fa-user-shield"></i></div>
+                                <div class="detector-info">
+                                    <span class="detector-name">GenD (2026)</span>
+                                    <span class="detector-desc">Face-based Generalizable Detection</span>
+                                </div>
+                                <div class="detector-score" id="gendScore">—</div>
+                            </div>
 
-                    <div class="score-bar-container">
-                        <div class="score-labels">
-                            <span>Real</span>
-                            <span>Fake</span>
                         </div>
-                        <div class="score-bar">
-                            <div class="score-marker" id="scoreMarker"></div>
-                        </div>
+                        <p class="details" id="detailsText">Ensemble score: 0.000000</p>
+                        <button class="btn btn-secondary" onclick="window.print()" style="margin-top: 1rem;"><i class="fa-solid fa-print"></i> Export Forensic Report</button>
                     </div>
-
-                    <!-- Detector Breakdown -->
-                    <div class="detectors-grid">
-                        <div class="detector-card" id="card-clip">
-                            <div class="detector-icon"><i class="fa-solid fa-brain"></i></div>
-                            <div class="detector-info">
-                                <span class="detector-name">CLIP Neural Net</span>
-                                <span class="detector-desc">Semantic & texture analysis</span>
-                            </div>
-                            <div class="detector-score" id="clipScore">—</div>
-                        </div>
-                        <div class="detector-card" id="card-fft">
-                            <div class="detector-icon"><i class="fa-solid fa-wave-square"></i></div>
-                            <div class="detector-info">
-                                <span class="detector-name">FFT Frequency</span>
-                                <span class="detector-desc">GAN grid & spectral artefacts</span>
-                            </div>
-                            <div class="detector-score" id="fftScore">—</div>
-                        </div>
-                        <div class="detector-card" id="card-edge">
-                            <div class="detector-icon"><i class="fa-solid fa-border-all"></i></div>
-                            <div class="detector-info">
-                                <span class="detector-name">Edge Noise</span>
-                                <span class="detector-desc">Camera sensor vs AI smoothness</span>
-                            </div>
-                            <div class="detector-score" id="edgeScore">—</div>
-                        </div>
-                    </div>
-
-                    <p class="details" id="detailsText">Ensemble score: 0.000000</p>
                 </div>
-            </div>
-        </main>
+
+                <!-- Bulk Result Area -->
+                <div class="bulk-results-area hidden" id="bulkResultsArea">
+                    <div class="bulk-progress-container hidden" id="bulkProgressContainer">
+                        <div class="bulk-header">
+                            <h3>Bulk Analysis</h3>
+                            <span id="bulkProgressText">0 / 0</span>
+                        </div>
+                        <div class="scanner-container">
+                            <div class="scanner-bar" id="bulkProgressBar" style="animation: none; left: 0%; width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div class="bulk-grid-container hidden" id="bulkGridContainer">
+                        <h2 class="prediction-title">Results Grid</h2>
+                        <div class="results-grid" id="results-grid"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
 
         <footer>
-            <p>Ensemble: CLIP:ViT-L/14 · FFT Frequency Analysis · Edge Noise Analysis</p>
+            <p>Ensemble: Community Forensics (2025) · B-Free (2025) · Provenance Check</p>
         </footer>
     </div>
 

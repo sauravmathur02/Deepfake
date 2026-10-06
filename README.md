@@ -1,11 +1,11 @@
-# Deepfake Detector
+# Universal Synthetic Media Detector
 
 A web-based deepfake detection tool that detects **AI-generated images and videos** using a 3-layer ensemble detection engine.
 
 ## Features
 - 🖼️ **Image Detection** — Upload any JPG, PNG, WEBP image
 - 🎬 **Video Detection** — Upload MP4, AVI, MOV, MKV videos (analyzes 8 frames)
-- 🧠 **3-Layer Ensemble** — CLIP Neural Net + FFT Frequency Analysis + Edge Noise Analysis
+- 🧠 **3-Layer Ensemble** — B-Free (DINOv2) + Community Forensics (ViT) + GenD (Face-based CLIP)
 - 🎨 **Modern UI** — Glassmorphism design with live score breakdown
 
 ## How to Run
@@ -30,11 +30,11 @@ pip install -r requirements.txt
 
 | Detector | Method | Weight |
 |---|---|---|
-| 🧠 CLIP Neural Net | CLIP:ViT-L/14 trained on fake images (CVPR 2023) | 55% |
-| 〰️ FFT Frequency | Detects GAN grid artefacts in the frequency domain | 25% |
-| ⬛ Edge Noise | Detects AI smoothness vs natural camera sensor noise | 20% |
+| 🤖 GenD (2026) | Face-based CLIP-L, detects AI-generated faces | 34% |
+| 🧠 B-Free (2025) | DINOv2 Bias-Free Vision Transformer | 33% |
+| 〰️ CommFor (2025)| Community Forensics SotA ViT | 33% |
 
-For **videos**: extracts 8 evenly-spaced frames from the first 32 frames, runs all 3 detectors on each frame, and averages the results.
+For **videos**: extracts 8 evenly-spaced frames from the video, runs all 3 detectors (extracting face crops for GenD), and averages the results.
 
 ## Project Structure
 ```
@@ -49,5 +49,6 @@ Deepfake/
 ```
 
 ## Credits
-- [UniversalFakeDetect](https://github.com/Yuheng-Li/UniversalFakeDetect) — CVPR 2023
-- [DeCoF](https://github.com/LongMa-2025/DeCoF) — Frame consistency methodology
+- [B-Free](https://arxiv.org/abs/2410.02758) — Bias-Free Vision Transformer
+- [Community Forensics](https://github.com/cf) — Universal Image Forensics
+- [GenD](https://github.com/yermandy/GenD) — Generalizable Deepfake Detection (WACV 2026)
