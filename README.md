@@ -311,13 +311,31 @@ Deepfake/
 
 **Option 1 (Windows, easiest):** double-click `run.bat`. It installs dependencies and starts the server.
 
-**Option 2 (terminal):**
+**Option 2 (terminal / manual setup):**
+
+If you cloned this repository from GitHub, follow these steps to recreate the environments (large weight files and virtual environments are not stored on GitHub).
+
+1. **Install main dependencies**:
 ```bash
 pip install -r requirements.txt
+```
+
+2. **Recreate GenD environment (required for face-swap detection)**:
+```bash
+python -m venv venv_gend
+venv_gend\Scripts\pip install -r requirements_gend.txt
+```
+
+3. **Model Weights**:
+- **Community Forensics and GenD** weights download automatically from Hugging Face on the first run.
+- **B-Free weights** (`model_epoch_best.pth` and `config.yaml`) should be placed in `UniversalFakeDetect/detectors/B-Free/code/weights/BFREE_dino2reg4/`. If you are pushing to GitHub, use **Git LFS** for these files as they exceed 100MB.
+
+4. **Start the server**:
+```bash
 cd UniversalFakeDetect
 uvicorn app:app --port 8000
 ```
-Open **http://localhost:8000**. Wait for "Models ready." in the console before uploading. The GenD worker starts automatically if `venv_gend` exists; otherwise the face layer is skipped.
+Open **http://localhost:8000**. Wait for "Models ready." in the console before uploading. The GenD worker starts automatically on port 8001 if `venv_gend` exists; otherwise, the face layer is skipped.
 
 ---
 

@@ -52,3 +52,9 @@ bench/
 # OS
 .DS_Store
 Thumbs.db
+
+# Large weights and archives
+*.pth
+*.pt
+*.bin
+*.zip
