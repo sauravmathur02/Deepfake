@@ -54,7 +54,10 @@ def _face_crop(bgr, margin=0.3):
     m = int(margin * max(w, h))
     x0, y0 = max(x - m, 0), max(y - m, 0)
     x1, y1 = min(x + w + m, bgr.shape[1]), min(y + h + m, bgr.shape[0])
-    return Image.fromarray(cv2.cvtColor(bgr[y0:y1, x0:x1], cv2.COLOR_BGR2RGB))
+    crop = Image.fromarray(cv2.cvtColor(bgr[y0:y1, x0:x1], cv2.COLOR_BGR2RGB))
+    H, W = bgr.shape[:2]
+    box = [x / W, y / H, w / W, h / H]  # normalized tight face box
+    return crop, box
 
 
 @app.get("/health")
@@ -71,10 +74,11 @@ async def score(file: UploadFile = File(...)):
     else:
         arr = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
         frames = [arr] if arr is not None else []
-    crops = [c for c in (_face_crop(f) for f in frames) if c is not None]
-    if not crops:
-        return {"gend": None, "faces": 0}
+    pairs = [p for p in (_face_crop(f) for f in frames) if p is not None]
+    if not pairs:
+        return {"gend": None, "faces": 0, "box": None}
+    crops = [p[0] for p in pairs]
     with torch.no_grad():
         x = torch.stack([model.feature_extractor.preprocess(c) for c in crops]).to(DEVICE)
         p = model(x).softmax(dim=-1)[:, 1].cpu().numpy()
-    return {"gend": float(p.mean()), "faces": len(crops)}
+    return {"gend": float(p.mean()), "faces": len(crops), "box": pairs[0][1]}

@@ -1,4 +1,4 @@
-/* ── Root variables ─────────────────────────────────────────────────── */
+﻿/* ── Root variables ─────────────────────────────────────────────────── */
 :root {
     --bg-color: #0b0f19;
     --glass-bg: rgba(20, 27, 45, 0.6);
@@ -1110,3 +1110,72 @@ footer {
         background: none;
     }
 }
+/* Forensic explanation */
+.explain-box { text-align:left; margin:1.2rem 0; padding:1.1rem 1.3rem; border-radius:16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(12px); animation:explainIn .6s ease; }
+.explain-box.fake { border-color:rgba(239,68,68,.5); box-shadow:0 0 24px rgba(239,68,68,.15); }
+.explain-box.real { border-color:rgba(16,185,129,.5); box-shadow:0 0 24px rgba(16,185,129,.15); }
+.explain-category { display:inline-block; padding:.25rem .8rem; border-radius:999px; font-size:.75rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:rgba(255,255,255,.1); }
+.explain-box.fake .explain-category { color:var(--fake-color); }
+.explain-box.real .explain-category { color:var(--real-color); }
+.explain-summary { margin:.7rem 0 .4rem; font-weight:600; font-size:1.02rem; }
+.explain-list { margin:0; padding-left:1.2rem; font-size:.88rem; line-height:1.55; opacity:.85; }
+.explain-list li { margin-bottom:.35rem; }
+@keyframes explainIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
+
+/* Forensic tabs */
+.forensic-tabs { display:flex; gap:.5rem; margin:1rem 0 .6rem; flex-wrap:wrap; }
+.ftab { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#fff; padding:.5rem 1rem; border-radius:99px; cursor:pointer; font-family:inherit; font-size:.82rem; transition:all .2s; }
+.ftab:hover { background:rgba(255,255,255,.12); }
+.ftab.active { background:linear-gradient(135deg,#8b5cf6,#06b6d4); border-color:transparent; box-shadow:0 0 16px rgba(139,92,246,.5); }
+.ftab-body { padding:1rem; border-radius:14px; background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.08); text-align:center; animation:explainIn .4s ease; }
+.ftab-body.hidden { display:none; }
+.ftab-body canvas { max-width:100%; height:auto; }
+.ftab-body img { max-width:100%; max-height:300px; border-radius:10px; }
+.ftab-body .hint { font-size:.78rem; opacity:.65; margin-top:.6rem; }
+.exif-table { width:100%; border-collapse:collapse; font-size:.82rem; text-align:left; }
+.exif-table td { padding:.4rem .6rem; border-bottom:1px solid rgba(255,255,255,.08); word-break:break-word; }
+.exif-table td:first-child { opacity:.6; width:38%; }
+
+@media print { .forensic-tabs { display:none !important; } }
+
+/* Bulk tile category + hint */
+.grid-item { position:relative; transition:transform .25s, box-shadow .25s; }
+.grid-item:not(.skeleton):hover { transform:translateY(-5px) scale(1.02); box-shadow:0 12px 32px rgba(139,92,246,.35); }
+.item-cat { position:absolute; top:8px; left:8px; z-index:3; padding:.2rem .6rem; border-radius:99px; font-size:.65rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; backdrop-filter:blur(8px); }
+.cat-fake { background:rgba(239,68,68,.75); } .cat-real { background:rgba(16,185,129,.75); }
+.grid-item:not(.skeleton)::after { content:'Click for full report'; position:absolute; bottom:8px; right:8px; font-size:.62rem; padding:.15rem .5rem; border-radius:99px; background:rgba(0,0,0,.55); opacity:0; transition:opacity .2s; pointer-events:none; }
+.grid-item:hover::after { opacity:1; }
+
+/* Modal */
+.modal-backdrop { position:fixed; inset:0; z-index:500; background:rgba(5,6,15,.78); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:1.5rem; animation:explainIn .3s ease; }
+.modal-backdrop.hidden { display:none; }
+.modal { position:relative; width:min(980px,100%); max-height:92vh; overflow-y:auto; padding:1.6rem; }
+.modal-close { position:absolute; top:12px; right:14px; background:rgba(255,255,255,.1); border:none; color:#fff; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:1rem; transition:background .2s, transform .2s; }
+.modal-close:hover { background:rgba(239,68,68,.6); transform:rotate(90deg); }
+.m-grid { display:grid; grid-template-columns:minmax(220px,1fr) 1.4fr; gap:1.4rem; }
+@media (max-width:760px) { .m-grid { grid-template-columns:1fr; } }
+.m-media img, .m-media video { width:100%; border-radius:14px; max-height:320px; object-fit:contain; background:#000; }
+.m-name { margin-top:.5rem; font-size:.8rem; opacity:.6; word-break:break-all; }
+.m-verdict { font-size:2rem; font-weight:800; letter-spacing:.05em; }
+.m-verdict small { font-size:.9rem; opacity:.7; font-weight:500; margin-left:.5rem; }
+.m-models { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.m-model { display:flex; align-items:center; gap:.5rem; padding:.6rem .8rem; border-radius:12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); font-size:.8rem; }
+.m-model span { flex:1; opacity:.8; } .m-model b { font-size:1rem; }
+.m-model.signal-fake b { color:#ef4444; } .m-model.signal-real b { color:#10b981; }
+.m-model.signal-fake { border-color:rgba(239,68,68,.4); } .m-model.signal-real { border-color:rgba(16,185,129,.35); }
+
+/* Face region overlay */
+.face-box { position:absolute; border:2px solid; border-radius:6px; pointer-events:none; animation:boxPulse 1.6s ease-in-out infinite; }
+.face-box.bad { border-color:#ef4444; box-shadow:0 0 14px rgba(239,68,68,.8); }
+.face-box.ok { border-color:#10b981; box-shadow:0 0 14px rgba(16,185,129,.7); animation:none; }
+.face-box span { position:absolute; top:-1.5rem; left:-2px; white-space:nowrap; font-size:.62rem; font-weight:700; padding:.1rem .5rem; border-radius:6px 6px 6px 0; color:#fff; }
+.face-box.bad span { background:#ef4444; } .face-box.ok span { background:#10b981; }
+@keyframes boxPulse { 50% { box-shadow:0 0 26px rgba(239,68,68,1); } }
+.m-boxwrap { position:relative; display:block; margin-top:1.6rem; }
+.m-boxwrap img { display:block; }
+.preview-area .media-wrapper { overflow:visible !important; }
+.face-box.neutral { border-color:#f59e0b; box-shadow:0 0 12px rgba(245,158,11,.6); animation:none; }
+.face-box.neutral span { background:#f59e0b; color:#111; }
+.m-boxwrap { display:inline-block; max-width:100%; }
+.m-boxwrap img { width:auto !important; max-width:100%; max-height:320px; }
+.m-media { text-align:center; }

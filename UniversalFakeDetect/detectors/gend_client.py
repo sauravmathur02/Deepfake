@@ -57,12 +57,12 @@ def stop():
 
 
 def score(filename: str, data: bytes, content_type: str = ""):
-    """Return (gend_prob_fake or None, faces_found). None if unavailable / no face."""
+    """Return (gend_prob_fake or None, faces_found, face_box or None)."""
     if _proc is None or _proc.poll() is not None:
-        return None, 0
+        return None, 0, None
     try:
         r = requests.post(f"{URL}/score", files={"file": (filename, data, content_type)}, timeout=120)
         j = r.json()
-        return j.get("gend"), int(j.get("faces", 0))
+        return j.get("gend"), int(j.get("faces", 0)), j.get("box")
     except Exception:
-        return None, 0
+        return None, 0, None

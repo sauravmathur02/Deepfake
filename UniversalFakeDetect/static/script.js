@@ -263,11 +263,17 @@ async function analyzeBulk() {
             if (data.success) {
                 const isFake = data.prediction === 'Fake';
                 results[i] = data;
+                results[i]._url = mediaUrl;
+                results[i]._name = file.name;
+                results[i]._video = !isImage;
                 updateTally();
                 element.classList.add(isFake ? 'status-fake' : 'status-real');
+                element.style.cursor = 'pointer';
+                element.onclick = () => openDetail(i);
                 
                 element.innerHTML = `
                   ${mediaHtml}
+                  <div class="item-cat ${isFake ? 'cat-fake' : 'cat-real'}">${data.explanation ? data.explanation.category : data.prediction}</div>
                   <div class="item-details">
                     <div class="detail-name">${file.name}</div>
                     <div class="detail-verdict ${isFake ? 'verdict-fake' : 'verdict-real'}">
@@ -355,6 +361,20 @@ function displayResults(data) {
     verdict.className = 'verdict ' + (isFake ? 'fake' : 'real');
     verdict.textContent = data.prediction.toUpperCase();
 
+    const ex = data.explanation;
+    const box = document.getElementById('explainBox');
+    if (ex) {
+        box.className = 'explain-box ' + (isFake ? 'fake' : 'real');
+        document.getElementById('explainCategory').textContent = ex.category;
+        document.getElementById('explainSummary').textContent = ex.summary;
+        const list = document.getElementById('explainList');
+        list.innerHTML = '';
+        ex.findings.forEach(f => { const li = document.createElement('li'); li.textContent = f; list.appendChild(li); });
+        box.style.display = 'block';
+    } else {
+        box.style.display = 'none';
+    }
+
     const col  = isFake ? 'var(--fake-color)' : 'var(--real-color)';
     const glow = isFake ? 'rgba(239,68,68,.4)' : 'rgba(16,185,129,.4)';
     scoreCircle.style.borderColor = col;
@@ -376,6 +396,8 @@ function displayResults(data) {
     detailsText.textContent =
         `Ensemble score: ${data.score.toFixed(6)}` +
         (data.frames_analyzed > 1 ? ` · ${data.frames_analyzed} frames averaged` : '');
+
+    postResult(data, isFake);
 
     analyzeBtn.disabled = false;
     analyzeBtn.classList.remove('disabled');
@@ -464,3 +486,153 @@ async function calibrateModel() {
     } catch (e) { msg.textContent = 'Could not reach server.'; }
 }
 
+
+
+// -- Forensic tabs -------------------------------------------------------------
+function showTab(id) {
+    document.querySelectorAll('.ftab-body').forEach(b => b.classList.toggle('hidden', b.id !== id));
+    document.querySelectorAll('.ftab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+}
+
+function drawChart(scores, cv = document.getElementById('frameChart')) {
+    const ctx = cv.getContext('2d');
+    const W = cv.width, H = cv.height, pad = 28;
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '11px Outfit, sans-serif';
+    ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.fillStyle = 'rgba(255,255,255,.5)';
+    [0, .25, .5, .75, 1].forEach(v => {
+        const y = H - pad - v * (H - 2 * pad);
+        ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - 8, y); ctx.stroke();
+        ctx.fillText(Math.round(v * 100) + '%', 0, y + 4);
+    });
+    const ty = H - pad - 0.30 * (H - 2 * pad);
+    ctx.strokeStyle = 'rgba(239,68,68,.7)'; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(pad, ty); ctx.lineTo(W - 8, ty); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(239,68,68,.9)'; ctx.fillText('threshold 30%', W - 90, ty - 4);
+    const n = scores.length, step = n > 1 ? (W - pad - 12) / (n - 1) : 0;
+    const pt = (s, i) => [pad + (n > 1 ? i * step : (W - pad) / 2), H - pad - s * (H - 2 * pad)];
+    const grad = ctx.createLinearGradient(0, 0, W, 0);
+    grad.addColorStop(0, '#8b5cf6'); grad.addColorStop(1, '#06b6d4');
+    ctx.strokeStyle = grad; ctx.lineWidth = 3; ctx.beginPath();
+    scores.forEach((s, i) => { const [x, y] = pt(s, i); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.stroke(); ctx.lineWidth = 1;
+    scores.forEach((s, i) => {
+        const [x, y] = pt(s, i);
+        ctx.fillStyle = s > 0.30 ? '#ef4444' : '#10b981';
+        ctx.beginPath(); ctx.arc(x, y, 5, 0, 7); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.fillText('F' + (i + 1), x - 8, H - 8);
+    });
+}
+
+function renderForensics(data) {
+    const fs = data.frame_scores || [];
+    const hint = document.getElementById('chartHint');
+    const chartScores = fs.length ? fs : [data.commfor_score, data.bfree_score, data.gend_score, data.prov_score]
+        .filter(v => v !== null && v !== undefined);
+    drawChart(chartScores);
+    if (fs.length) {
+        const fakeN = fs.filter(s => s > 0.30).length;
+        hint.textContent = `Per-frame fake probability. ${fakeN}/${fs.length} frames exceed the threshold` +
+            (fakeN > 0 && fakeN < fs.length ? ' \u2014 mixed signal may indicate partial manipulation (e.g. a face-swap in only some scenes).' : '.');
+    } else {
+        hint.textContent = 'Per-model fake probability: CommFor, B-Free' + (data.gend_score != null ? ', GenD' : '') + ', Provenance.';
+    }
+    const ela = document.getElementById('elaImg');
+    ela.style.display = data.ela ? 'block' : 'none';
+    if (data.ela) ela.src = data.ela;
+    const tbl = document.getElementById('exifTable');
+    tbl.innerHTML = '';
+    Object.entries(data.exif || {}).forEach(([k, v]) => {
+        const tr = document.createElement('tr');
+        const a = document.createElement('td'), b = document.createElement('td');
+        a.textContent = k; b.textContent = v; tr.append(a, b); tbl.appendChild(tr);
+    });
+    if (!tbl.children.length) tbl.innerHTML = '<tr><td>No metadata found (common for AI images and re-uploads)</td></tr>';
+    showTab('tabFrames');
+}
+
+function faceBoxHtml(d) {
+    if (!d.face_box) return '';
+    const [x, y, w, h] = d.face_box.map(v => (v * 100).toFixed(2));
+    const bad = d.gend_score != null && d.gend_score > 0.30;
+    const fake = d.prediction === 'Fake';
+    const cls = bad ? 'bad' : (fake ? 'neutral' : 'ok');
+    const label = bad ? 'Suspected manipulated face' : (fake ? 'No face-swap signal' : 'Face looks natural');
+    return `<div class="face-box ${cls}" style="left:${x}%;top:${y}%;width:${w}%;height:${h}%"><span>${label}</span></div>`;
+}
+
+function postResult(data, isFake) {
+    renderForensics(data);
+    const wrap = document.querySelector('#previewArea .media-wrapper');
+    wrap.querySelectorAll('.face-box').forEach(e => e.remove());
+    if (currentFiles.length === 1 && data.face_box) wrap.insertAdjacentHTML('beforeend', faceBoxHtml(data));
+}
+
+
+// -- Bulk: full detail modal ---------------------------------------------------
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function openDetail(i) {
+    const d = results[i]; if (!d) return;
+    const isFake = d.prediction === 'Fake', ex = d.explanation || {};
+    const models = [
+        ['Community Forensics', d.commfor_score, 'fa-brain'],
+        ['B-Free', d.bfree_score, 'fa-robot'],
+        ['Provenance', d.prov_score, 'fa-file-signature'],
+    ];
+    if (d.gend_score != null) models.push(['GenD (face)', d.gend_score, 'fa-user-shield']);
+    const media = d._video
+        ? `<video src="${d._url}" controls muted></video>`
+        : `<div class="m-boxwrap"><img src="${d._url}" alt="media">${faceBoxHtml(d)}</div>`;
+    const exif = Object.entries(d.exif || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')
+        || '<tr><td>No metadata found</td></tr>';
+    document.getElementById('modalBody').innerHTML = `
+        <div class="m-grid">
+          <div class="m-media">${media}<div class="m-name">${esc(d._name)}</div></div>
+          <div class="m-info">
+            <div class="m-verdict ${isFake ? 'verdict-fake' : 'verdict-real'}">${d.prediction.toUpperCase()} <small>${d.confidence}</small></div>
+            <div class="explain-box ${isFake ? 'fake' : 'real'}" style="display:block">
+              <span class="explain-category">${esc(ex.category || '')}</span>
+              <p class="explain-summary">${esc(ex.summary || '')}</p>
+              <ul class="explain-list">${(ex.findings || []).map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+            </div>
+            <div class="m-models">${models.map(([n, s, ic]) => `
+              <div class="m-model ${s > 0.3 ? 'signal-fake' : 'signal-real'}"><i class="fa-solid ${ic}"></i><span>${n}</span><b>${Math.round(s * 100)}%</b></div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="forensic-tabs">
+          <button class="ftab active" data-m="mChart"><i class="fa-solid fa-chart-line"></i> Signal Chart</button>
+          ${d.ela ? '<button class="ftab" data-m="mEla"><i class="fa-solid fa-fire-flame-curved"></i> ELA Heatmap</button>' : ''}
+          <button class="ftab" data-m="mExif"><i class="fa-solid fa-tags"></i> Metadata</button>
+        </div>
+        <div class="ftab-body m-tab" id="mChart"><canvas id="mCanvas" width="560" height="180"></canvas></div>
+        ${d.ela ? `<div class="ftab-body m-tab hidden" id="mEla"><img src="${d.ela}" alt="ELA"></div>` : ''}
+        <div class="ftab-body m-tab hidden" id="mExif"><table class="exif-table">${exif}</table></div>`;
+    document.querySelectorAll('#modalBody .ftab').forEach(b => b.onclick = () => {
+        document.querySelectorAll('#modalBody .ftab').forEach(x => x.classList.toggle('active', x === b));
+        document.querySelectorAll('#modalBody .m-tab').forEach(t => t.classList.toggle('hidden', t.id !== b.dataset.m));
+    });
+    document.getElementById('detailModal').classList.remove('hidden');
+    const fs = (d.frame_scores && d.frame_scores.length) ? d.frame_scores
+        : [d.commfor_score, d.bfree_score, d.gend_score, d.prov_score].filter(v => v != null);
+    drawChart(fs, document.getElementById('mCanvas'));
+}
+function closeDetail() { document.getElementById('detailModal').classList.add('hidden'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+// -- Bulk: CSV export ----------------------------------------------------------
+function exportCsv() {
+    const rows = [['File', 'Verdict', 'Confidence', 'Category', 'Score', 'CommFor', 'BFree', 'GenD', 'Provenance']];
+    Object.values(results).forEach(r => rows.push([r._name, r.prediction, r.confidence,
+        (r.explanation || {}).category || '', r.score, r.commfor_score, r.bfree_score, r.gend_score ?? '', r.prov_score]));
+    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = 'forensic_results.csv'; a.click();
+}
+const csvBtn = document.createElement('button');
+csvBtn.className = 'btn btn-secondary btn-block'; csvBtn.style.marginTop = '.6rem';
+csvBtn.innerHTML = '<i class="fa-solid fa-file-csv"></i> Export CSV';
+csvBtn.onclick = exportCsv;
+document.getElementById('generateReportBtn').after(csvBtn);

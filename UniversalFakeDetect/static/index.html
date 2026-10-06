@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -122,6 +122,11 @@
                             <div class="score-circle" id="scoreCircle"><span class="score-value" id="scoreValue">—</span></div>
                         </div>
                         <h1 class="verdict" id="verdict">REAL</h1>
+                        <div class="explain-box" id="explainBox">
+                            <span class="explain-category" id="explainCategory"></span>
+                            <p class="explain-summary" id="explainSummary"></p>
+                            <ul class="explain-list" id="explainList"></ul>
+                        </div>
                         <div class="score-bar-container">
                             <div class="score-labels"><span>Real</span><span>Fake</span></div>
                             <div class="score-bar"><div class="score-marker" id="scoreMarker"></div></div>
@@ -161,6 +166,14 @@
                             </div>
 
                         </div>
+                        <div class="forensic-tabs">
+                            <button class="ftab active" data-tab="tabFrames" onclick="showTab('tabFrames')"><i class="fa-solid fa-chart-line"></i> Signal Chart</button>
+                            <button class="ftab" data-tab="tabEla" onclick="showTab('tabEla')"><i class="fa-solid fa-fire-flame-curved"></i> ELA Heatmap</button>
+                            <button class="ftab" data-tab="tabExif" onclick="showTab('tabExif')"><i class="fa-solid fa-tags"></i> Metadata</button>
+                        </div>
+                        <div class="ftab-body" id="tabFrames"><canvas id="frameChart" width="560" height="180"></canvas><p class="hint" id="chartHint"></p></div>
+                        <div class="ftab-body hidden" id="tabEla"><img id="elaImg" alt="ELA heatmap"><p class="hint">Error Level Analysis: bright regions recompress differently from the rest, which can reveal pasted, edited or generated areas. Treat as a hint, not proof.</p></div>
+                        <div class="ftab-body hidden" id="tabExif"><table class="exif-table" id="exifTable"></table></div>
                         <p class="details" id="detailsText">Ensemble score: 0.000000</p>
                         <button class="btn btn-secondary" onclick="window.print()" style="margin-top: 1rem;"><i class="fa-solid fa-print"></i> Export Forensic Report</button>
                     </div>
@@ -191,5 +204,13 @@
     </div>
 
     <script src="/static/script.js"></script>
+    <div class="modal-backdrop hidden" id="detailModal" onclick="if(event.target===this)closeDetail()">
+        <div class="modal glass-panel">
+            <button class="modal-close" onclick="closeDetail()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
 </body>
 </html>
+
+
