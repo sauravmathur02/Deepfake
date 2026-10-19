@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta name="description" content="Forensic deepfake detection dashboard: bulk image and video analysis with ensemble AI models and feedback-based calibration.">
     <title>Universal Synthetic Media Detector | Forensic Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,40 +17,103 @@
 
     <div class="container">
         <header>
-            <div class="badge">3-Layer Ensemble Detection</div>
+            <div class="badge">4-Layer Forensic Ensemble</div>
             <h1>Universal <span>Synthetic Media</span> Detector</h1>
-            <p>Advanced Multi-Model AI Forensics for Images and Face-Swapped Videos.</p>
+            <p>Advanced Multi-Model AI Forensics for Images, Diffusion Synthesis, and Face-Swapped Videos.</p>
         </header>
 
         <div class="dashboard">
-            <!-- ═══ Sidebar: controls ═══ -->
+            <!-- ═══ Sidebar: controls (Sticky top: 20px) ═══ -->
             <aside class="sidebar">
                 <section class="glass-panel panel-upload">
                     <h2 class="panel-title"><i class="fa-solid fa-upload"></i> Input</h2>
+                    
+                    <!-- Mode Selection -->
+                    <div class="mode-select-wrapper">
+                        <label class="mode-label"><i class="fa-solid fa-sliders"></i> Target Analysis Mode</label>
+                        <div class="mode-pills" role="tablist">
+                            <button type="button" class="mode-pill active" data-mode="auto" id="modeBtnAuto">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Auto</span>
+                            </button>
+                            <button type="button" class="mode-pill" data-mode="deepfake" id="modeBtnDeepfake">
+                                <i class="fa-solid fa-masks-theater"></i>
+                                <span>Deepfake</span>
+                            </button>
+                            <button type="button" class="mode-pill" data-mode="ai_generated" id="modeBtnAiGen">
+                                <i class="fa-solid fa-robot"></i>
+                                <span>AI Generated</span>
+                            </button>
+                        </div>
+                        <div class="mode-hint" id="modeHint">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span id="modeHintText">Autonomous diagnosis: classifies authentic, face-swap, or full AI generation.</span>
+                        </div>
+                    </div>
+
+                    <!-- Upload dropzone -->
                     <div class="upload-area" id="uploadArea">
                         <input type="file" id="fileInput" accept="image/*,video/*" multiple hidden>
                         <div class="upload-content">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <h3>Drop images or videos</h3>
                             <p>JPG, PNG, MP4, MOV, AVI · single or bulk</p>
-                            <button class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                            <button type="button" class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
                         </div>
                         <div class="preview-area hidden" id="previewArea">
                             <div class="media-wrapper" style="position:relative; width:fit-content; margin:0 auto; overflow:hidden; border-radius:12px;">
                                 <img id="imagePreview" src="" alt="Preview" class="hidden">
                                 <video id="videoPreview" src="" controls class="hidden"></video>
+                                <canvas id="gradCamCanvas" class="gradcam-overlay hidden"></canvas>
                                 <div class="laser-scanner hidden" id="laserScanner"></div>
+                                <div class="facial-landmarks hidden" id="facialLandmarks"></div>
+                                <div class="scan-live-counter hidden" id="scanLiveCounter">
+                                    <i class="fa-solid fa-microchip"></i> <span id="scanCounterText">Scanning ViT Patches...</span>
+                                </div>
                             </div>
+
+                            <!-- Interactive Grad-CAM & Overlay Toggles on Media Preview -->
+                            <div class="preview-overlay-toggles hidden" id="previewOverlayToggles">
+                                <button type="button" class="preview-toggle-btn active" id="btnToggleBox" data-view="box">
+                                    <i class="fa-regular fa-square"></i> Bounding Box
+                                </button>
+                                <button type="button" class="preview-toggle-btn" id="btnToggleHeatmap" data-view="heatmap">
+                                    <i class="fa-solid fa-fire-flame-curved"></i> AI Attention Heatmap
+                                </button>
+                                <button type="button" class="preview-toggle-btn" id="btnToggleClean" data-view="clean">
+                                    <i class="fa-regular fa-image"></i> Clean Original
+                                </button>
+                            </div>
+                            <div class="preview-heatmap-slider-row hidden" id="previewHeatmapSliderRow">
+                                <label for="previewHeatmapOpacity"><i class="fa-solid fa-layer-group"></i> Heatmap Opacity: <b id="previewHeatmapOpacityVal">75%</b></label>
+                                <input type="range" id="previewHeatmapOpacity" min="10" max="100" step="5" value="75">
+                            </div>
+
                             <div id="fileMetadata" class="file-metadata"></div>
-                            <button class="btn btn-secondary" id="changeImageBtn">Change File</button>
+                            <button type="button" class="btn btn-secondary" id="changeImageBtn">Change File</button>
                         </div>
                         <div class="bulk-preview-area hidden" id="bulkPreviewArea">
                             <div class="bulk-icon"><i class="fa-solid fa-layer-group"></i></div>
-                            <h3 id="bulkCountText">5 files selected</h3>
+                            <h3 id="bulkCountText">0 files selected</h3>
                             <p>Ready for batch analysis.</p>
-                            <button class="btn btn-secondary" id="bulkChangeBtn">Clear Files</button>
+                            <button type="button" class="btn btn-secondary" id="bulkChangeBtn">Clear Files</button>
                         </div>
                     </div>
+
+                    <!-- Direct URL & Social Media Link Input (Directly below dropzone) -->
+                    <div class="url-input-wrapper">
+                        <label class="mode-label"><i class="fa-solid fa-link"></i> Direct URL / Social Media Link</label>
+                        <div class="url-input-container">
+                            <i class="fa-solid fa-globe url-icon"></i>
+                            <input type="url" id="mediaUrlInput" class="url-input" placeholder="Paste image or video URL (YouTube, X, TikTok, direct link)..." autocomplete="off">
+                            <button type="button" class="btn-url-fetch" id="fetchUrlBtn" title="Scan URL">
+                                <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+                                <span>Scan URL</span>
+                            </button>
+                        </div>
+                        <div class="url-status hidden" id="urlStatus"></div>
+                    </div>
+
                     <div class="analyze-section">
                         <button class="btn btn-primary analyze-btn disabled" id="analyzeBtn" disabled>
                             <i class="fa-solid fa-microchip"></i> Analyze Media
@@ -82,100 +145,359 @@
 
             <!-- ═══ Main: results ═══ -->
             <main class="main-panel glass-panel">
+                <!-- Interactive Empty State -->
                 <div class="empty-state" id="emptyState">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <h3>No analysis yet</h3>
-                    <p>Add files on the left and press <b>Analyze Media</b>. Results appear here.</p>
+                    <div class="empty-header">
+                        <div class="empty-icon-pulse">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3>No analysis yet</h3>
+                        <p>Add files on the left and press <b>Analyze Media</b>. Results appear here.</p>
+                    </div>
+
+                    <div class="sample-presets-section">
+                        <div class="sample-presets-title">
+                            <i class="fa-solid fa-flask-vial"></i>
+                            <span>Try Quick Forensic Samples</span>
+                        </div>
+                        <div class="sample-cards-grid">
+                            <!-- Sample 1 -->
+                            <div class="sample-card" data-sample="deepfake" title="Click to test Deepfake Face-Swap sample">
+                                <div class="sample-badge badge-deepfake">Deepfake</div>
+                                <div class="sample-thumb">
+                                    <img src="/static/samples/sample_deepfake.jpg" alt="Deepfake Face Swap" loading="lazy">
+                                    <div class="sample-hover-action"><i class="fa-solid fa-play"></i> Run Test</div>
+                                </div>
+                                <div class="sample-info">
+                                    <div class="sample-name">🎭 Sample Deepfake Face-Swap</div>
+                                    <div class="sample-desc">Manipulated facial boundaries · GenD benchmark</div>
+                                </div>
+                            </div>
+
+                            <!-- Sample 2 -->
+                            <div class="sample-card" data-sample="diffusion" title="Click to test Diffusion Synthesis sample">
+                                <div class="sample-badge badge-diffusion">Full AI Gen</div>
+                                <div class="sample-thumb">
+                                    <img src="/static/samples/sample_diffusion.jpg" alt="Diffusion Synthesis" loading="lazy">
+                                    <div class="sample-hover-action"><i class="fa-solid fa-play"></i> Run Test</div>
+                                </div>
+                                <div class="sample-info">
+                                    <div class="sample-name">🤖 Sample AI Diffusion Portrait</div>
+                                    <div class="sample-desc">Midjourney / Flux generative fingerprint</div>
+                                </div>
+                            </div>
+
+                            <!-- Sample 3 -->
+                            <div class="sample-card" data-sample="authentic" title="Click to test Authentic Camera Photo sample">
+                                <div class="sample-badge badge-authentic">Authentic</div>
+                                <div class="sample-thumb">
+                                    <img src="/static/samples/sample_authentic.jpg" alt="Authentic Photo" loading="lazy">
+                                    <div class="sample-hover-action"><i class="fa-solid fa-play"></i> Run Test</div>
+                                </div>
+                                <div class="sample-info">
+                                    <div class="sample-name">📷 Sample Authentic C2PA Photo</div>
+                                    <div class="sample-desc">Optical sensor physics · Unaltered capture</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Single Result Area -->
                 <div class="results-area hidden" id="resultsArea">
+                    <!-- Upgraded Active Scanning State with Concentric Radar -->
                     <div class="analysis-process hidden" id="analysisProcess">
+                        <div class="radar-scan-wrapper">
+                            <div class="radar-circle-container">
+                                <div class="radar-ring radar-ring-1"></div>
+                                <div class="radar-ring radar-ring-2"></div>
+                                <div class="radar-ring radar-ring-3"></div>
+                                <div class="radar-sweep"></div>
+                                <div class="radar-center">
+                                    <span class="radar-pct" id="radarPct">0%</span>
+                                    <span class="radar-sub">ANALYZING</span>
+                                </div>
+                            </div>
+                            <div class="radar-pulse-badge">
+                                <i class="fa-solid fa-crosshairs fa-spin"></i> CROSS-REFERENCING ENSEMBLE MODELS
+                            </div>
+                        </div>
+
                         <div class="scanner-container"><div class="scanner-bar"></div></div>
+
+                        <!-- 5 Steps with Mini Progress Bars and Millisecond Timers -->
                         <div class="steps-container">
                             <div class="step" id="step1">
                                 <div class="step-icon"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
-                                <div class="step-text">Initializing forensic analysis...</div>
+                                <div class="step-content">
+                                    <div class="step-header-row">
+                                        <span class="step-text">Initializing forensic pipeline...</span>
+                                        <span class="step-timer" id="stepTimer1">+0ms</span>
+                                    </div>
+                                    <div class="step-bar-track"><div class="step-bar-fill" id="stepBar1"></div></div>
+                                </div>
                             </div>
                             <div class="step pending" id="step2">
                                 <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
-                                <div class="step-text">Extracting metadata &amp; C2PA signatures</div>
+                                <div class="step-content">
+                                    <div class="step-header-row">
+                                        <span class="step-text">Extracting metadata &amp; C2PA credentials...</span>
+                                        <span class="step-timer" id="stepTimer2">+0ms</span>
+                                    </div>
+                                    <div class="step-bar-track"><div class="step-bar-fill" id="stepBar2"></div></div>
+                                </div>
                             </div>
                             <div class="step pending" id="step3">
                                 <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
-                                <div class="step-text">Running Community Forensics ViT-S model</div>
+                                <div class="step-content">
+                                    <div class="step-header-row">
+                                        <span class="step-text">Running Community Forensics ViT-S model...</span>
+                                        <span class="step-timer" id="stepTimer3">+0ms</span>
+                                    </div>
+                                    <div class="step-bar-track"><div class="step-bar-fill" id="stepBar3"></div></div>
+                                </div>
                             </div>
                             <div class="step pending" id="step4">
                                 <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
-                                <div class="step-text">Cross-referencing B-Free signals</div>
+                                <div class="step-content">
+                                    <div class="step-header-row">
+                                        <span class="step-text">Cross-referencing B-Free &amp; GenD models...</span>
+                                        <span class="step-timer" id="stepTimer4">+0ms</span>
+                                    </div>
+                                    <div class="step-bar-track"><div class="step-bar-fill" id="stepBar4"></div></div>
+                                </div>
                             </div>
                             <div class="step pending" id="step5">
                                 <div class="step-icon"><i class="fa-solid fa-circle"></i></div>
-                                <div class="step-text">Synthesizing final ensemble verdict</div>
+                                <div class="step-content">
+                                    <div class="step-header-row">
+                                        <span class="step-text">Synthesizing final ensemble verdict...</span>
+                                        <span class="step-timer" id="stepTimer5">+0ms</span>
+                                    </div>
+                                    <div class="step-bar-track"><div class="step-bar-fill" id="stepBar5"></div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Upgraded Compact 2-Column Horizontal Verdict Card -->
                     <div class="prediction-card hidden" id="predictionCard">
-                        <h2 class="prediction-title">Ensemble Verdict</h2>
-                        <div class="score-display">
-                            <div class="score-circle" id="scoreCircle"><span class="score-value" id="scoreValue">—</span></div>
+                        <div class="verdict-header">
+                            <div class="verdict-header-left">
+                                <h2 class="prediction-title">Ensemble Verdict</h2>
+                                <span class="eval-mode-pill" id="evalModeBadge"><i class="fa-solid fa-wand-magic-sparkles"></i> Mode: Auto</span>
+                            </div>
+                            <div class="verdict-header-right">
+                                <span class="verdict-meta" id="verdictMetaTime"></span>
+                            </div>
                         </div>
-                        <h1 class="verdict" id="verdict">REAL</h1>
-                        <div class="explain-box" id="explainBox">
-                            <span class="explain-category" id="explainCategory"></span>
-                            <p class="explain-summary" id="explainSummary"></p>
-                            <ul class="explain-list" id="explainList"></ul>
+
+                        <!-- 2-Column Horizontal Grid -->
+                        <div class="verdict-horizontal-grid">
+                            <!-- Left Column: Gauge, Status, Tooltip -->
+                            <div class="verdict-col-left">
+                                <div class="score-display">
+                                    <div class="score-circle" id="scoreCircle">
+                                        <span class="score-value" id="scoreValue">—</span>
+                                    </div>
+                                </div>
+                                <h1 class="verdict" id="verdict">REAL</h1>
+                                <div class="ensemble-weight-tooltip" id="ensembleTooltip">
+                                    <span class="tooltip-badge" title="Consensus combining GenD (face forensics), Community Forensics ViT-S, B-Free spectral, and C2PA metadata.">
+                                        <i class="fa-solid fa-sliders"></i>
+                                        <span id="tooltipModeText">Mode: AUTO</span> · Score: <span id="tooltipScoreVal">0.0000</span>
+                                        <i class="fa-solid fa-circle-question tooltip-icon"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Diagnostic Summary + Gradient Bar -->
+                            <div class="verdict-col-right">
+                                <div class="explain-box" id="explainBox">
+                                    <div class="explain-box-top">
+                                        <span class="explain-category" id="explainCategory"></span>
+                                        <span class="explain-likelihood-badge" id="explainLikelihood"></span>
+                                    </div>
+                                    <p class="explain-summary" id="explainSummary"></p>
+                                    <ul class="explain-list" id="explainList"></ul>
+                                </div>
+
+                                <div class="score-bar-container">
+                                    <div class="score-labels">
+                                        <span class="label-real"><i class="fa-solid fa-shield-check"></i> Authentic</span>
+                                        <span class="label-mid"><i class="fa-solid fa-triangle-exclamation"></i> Ambiguous</span>
+                                        <span class="label-fake"><i class="fa-solid fa-skull"></i> Synthetic / Manipulated</span>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-marker" id="scoreMarker"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Interactive Sensitivity Threshold Slider (50% - 95%) -->
+                                <div class="sensitivity-slider-wrapper">
+                                    <div class="sensitivity-slider-header">
+                                        <label for="sensitivitySlider"><i class="fa-solid fa-sliders"></i> Detection Sensitivity Threshold: <b id="sensitivityVal">60%</b></label>
+                                        <span class="sensitivity-hint">(Adjust strictness of ensemble verdict)</span>
+                                    </div>
+                                    <div class="slider-row">
+                                        <span class="slider-min">Lenient (50%)</span>
+                                        <input type="range" id="sensitivitySlider" min="50" max="95" step="1" value="60">
+                                        <span class="slider-max">Strict (95%)</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="score-bar-container">
-                            <div class="score-labels"><span>Real</span><span>Fake</span></div>
-                            <div class="score-bar"><div class="score-marker" id="scoreMarker"></div></div>
-                        </div>
+
+                        <!-- 4-Model Ensemble Cards (with clear status badges & risk progress tracks) -->
                         <div class="detectors-grid">
+                            <!-- Model 1: Community Forensics -->
                             <div class="detector-card" id="card-commfor">
-                                <div class="detector-icon"><i class="fa-solid fa-brain"></i></div>
+                                <div class="detector-card-top">
+                                    <div class="detector-icon"><i class="fa-solid fa-brain"></i></div>
+                                    <span class="detector-badge badge-pass" id="badgeCommfor">PASS</span>
+                                </div>
                                 <div class="detector-info">
                                     <span class="detector-name">Community Forensics (2025)</span>
-                                    <span class="detector-desc">SotA ViT model</span>
+                                    <span class="detector-desc">SotA ViT-S/384 Generator Fingerprint</span>
                                 </div>
-                                <div class="detector-score" id="commforScore">—</div>
+                                <div class="detector-progress-wrapper">
+                                    <div class="detector-metric-row">
+                                        <span class="metric-label" id="commforMetricLabel">Synthetic Risk</span>
+                                        <span class="detector-score" id="commforScore">0%</span>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-bar" id="commforBar" style="width: 0%"></div></div>
+                                </div>
                             </div>
+
+                            <!-- Model 2: B-Free -->
                             <div class="detector-card" id="card-bfree">
-                                <div class="detector-icon"><i class="fa-solid fa-robot"></i></div>
+                                <div class="detector-card-top">
+                                    <div class="detector-icon"><i class="fa-solid fa-robot"></i></div>
+                                    <span class="detector-badge badge-pass" id="badgeBfree">PASS</span>
+                                </div>
                                 <div class="detector-info">
                                     <span class="detector-name">B-Free (2025)</span>
-                                    <span class="detector-desc">DINOv2 Bias-Free Vision Transformer</span>
+                                    <span class="detector-desc">DINOv2 Bias-Free Spectral Transformer</span>
                                 </div>
-                                <div class="detector-score" id="bfreeScore">—</div>
+                                <div class="detector-progress-wrapper">
+                                    <div class="detector-metric-row">
+                                        <span class="metric-label" id="bfreeMetricLabel">Synthetic Risk</span>
+                                        <span class="detector-score" id="bfreeScore">0%</span>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-bar" id="bfreeBar" style="width: 0%"></div></div>
+                                </div>
                             </div>
+
+                            <!-- Model 3: Provenance & Metadata -->
                             <div class="detector-card" id="card-prov">
-                                <div class="detector-icon"><i class="fa-solid fa-file-signature"></i></div>
+                                <div class="detector-card-top">
+                                    <div class="detector-icon"><i class="fa-solid fa-file-signature"></i></div>
+                                    <span class="detector-badge badge-neutral" id="badgeProv">NO C2PA TAGS</span>
+                                </div>
                                 <div class="detector-info">
                                     <span class="detector-name">Provenance &amp; Metadata</span>
                                     <span class="detector-desc">C2PA / EXIF / PNG Tags</span>
                                 </div>
-                                <div class="detector-score" id="provScore">—</div>
-                            </div>
-                            <div class="detector-card" id="card-gend" style="display: none;">
-                                <div class="detector-icon"><i class="fa-solid fa-user-shield"></i></div>
-                                <div class="detector-info">
-                                    <span class="detector-name">GenD (2026)</span>
-                                    <span class="detector-desc">Face-based Generalizable Detection</span>
+                                <div class="detector-progress-wrapper">
+                                    <div class="detector-metric-row">
+                                        <span class="metric-label" id="provMetricLabel">AI Declaration</span>
+                                        <span class="detector-score" id="provScore">0%</span>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-bar" id="provBar" style="width: 0%"></div></div>
                                 </div>
-                                <div class="detector-score" id="gendScore">—</div>
                             </div>
 
+                            <!-- Model 4: GenD -->
+                            <div class="detector-card" id="card-gend" style="display: none;">
+                                <div class="detector-card-top">
+                                    <div class="detector-icon"><i class="fa-solid fa-user-shield"></i></div>
+                                    <span class="detector-badge badge-pass" id="badgeGend">PASS</span>
+                                </div>
+                                <div class="detector-info">
+                                    <span class="detector-name">GenD (2026)</span>
+                                    <span class="detector-desc">Face-Swap &amp; Boundary Manipulation</span>
+                                </div>
+                                <div class="detector-progress-wrapper">
+                                    <div class="detector-metric-row">
+                                        <span class="metric-label" id="gendMetricLabel">Face Manipulation</span>
+                                        <span class="detector-score" id="gendScore">0%</span>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-bar" id="gendBar" style="width: 0%"></div></div>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Forensic Tabs -->
                         <div class="forensic-tabs">
-                            <button class="ftab active" data-tab="tabFrames" onclick="showTab('tabFrames')"><i class="fa-solid fa-chart-line"></i> Signal Chart</button>
-                            <button class="ftab" data-tab="tabEla" onclick="showTab('tabEla')"><i class="fa-solid fa-fire-flame-curved"></i> ELA Heatmap</button>
-                            <button class="ftab" data-tab="tabExif" onclick="showTab('tabExif')"><i class="fa-solid fa-tags"></i> Metadata</button>
+                            <button type="button" class="ftab active" data-tab="tabFrames" onclick="showTab('tabFrames')"><i class="fa-solid fa-chart-line"></i> Signal Chart &amp; Timeline</button>
+                            <button type="button" class="ftab" data-tab="tabEla" onclick="showTab('tabEla')"><i class="fa-solid fa-fire-flame-curved"></i> ELA Heatmap Inspector</button>
+                            <button type="button" class="ftab" data-tab="tabExif" onclick="showTab('tabExif')"><i class="fa-solid fa-tags"></i> Metadata &amp; EXIF</button>
                         </div>
-                        <div class="ftab-body" id="tabFrames"><canvas id="frameChart" width="560" height="180"></canvas><p class="hint" id="chartHint"></p></div>
-                        <div class="ftab-body hidden" id="tabEla"><img id="elaImg" alt="ELA heatmap"><p class="hint">Error Level Analysis: bright regions recompress differently from the rest, which can reveal pasted, edited or generated areas. Treat as a hint, not proof.</p></div>
-                        <div class="ftab-body hidden" id="tabExif"><table class="exif-table" id="exifTable"></table></div>
+
+                        <!-- Tab 1: Signal Chart & Video Frame-by-Frame Anomaly Timeline Scrubber -->
+                        <div class="ftab-body" id="tabFrames">
+                            <div class="chart-header">
+                                <span class="chart-title" id="chartTitleText"><i class="fa-solid fa-waveform-lines"></i> Multi-Signal Forensic Distribution</span>
+                                <span class="chart-legend" id="chartLegend"></span>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="frameChart" width="700" height="200"></canvas>
+                            </div>
+                            <div class="video-scrubber-controls hidden" id="videoScrubberControls">
+                                <div class="scrubber-legend">
+                                    <span><i class="fa-solid fa-circle text-emerald"></i> Authentic Window</span>
+                                    <span><i class="fa-solid fa-circle text-crimson"></i> Anomaly Spike (&gt;30%) — Click to jump video</span>
+                                </div>
+                            </div>
+                            <p class="hint" id="chartHint"></p>
+                        </div>
+
+                        <!-- Tab 2: Interactive ELA Inspector with Curtain Slider & Multipliers -->
+                        <div class="ftab-body hidden" id="tabEla">
+                            <div class="ela-toolbar">
+                                <div class="ela-control-group">
+                                    <label for="elaBrightnessSlider"><i class="fa-solid fa-sun"></i> Boost Intensity: <b id="elaBrightnessVal">1.0x</b></label>
+                                    <input type="range" id="elaBrightnessSlider" min="1" max="20" step="0.5" value="1">
+                                </div>
+                                <div class="ela-control-group">
+                                    <label for="elaOpacitySlider"><i class="fa-solid fa-layer-group"></i> Blend Opacity: <b id="elaOpacityVal">100%</b></label>
+                                    <input type="range" id="elaOpacitySlider" min="0" max="100" step="5" value="100">
+                                </div>
+                                <div class="ela-control-group ela-mode-toggle">
+                                    <label><i class="fa-solid fa-split"></i> View:</label>
+                                    <div class="btn-group-toggle">
+                                        <button type="button" class="btn-toggle active" id="elaViewSplitBtn" title="Split-screen curtain slider">Curtain</button>
+                                        <button type="button" class="btn-toggle" id="elaViewSideBtn" title="Side-by-side comparison">Side-by-Side</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-xs btn-secondary" id="elaResetBtn" title="Reset controls"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                            </div>
+
+                            <div class="ela-comparison-wrapper">
+                                <div class="comparison-container mode-curtain" id="elaComparisonContainer">
+                                    <div class="comp-layer comp-original">
+                                        <img id="elaOriginalImg" alt="Original Media">
+                                        <span class="comp-label comp-label-left">Original</span>
+                                    </div>
+                                    <div class="comp-layer comp-heatmap" id="compHeatmapLayer">
+                                        <img id="elaImg" alt="ELA Heatmap">
+                                        <span class="comp-label comp-label-right">ELA Compression Heatmap</span>
+                                    </div>
+                                    <div class="comp-divider" id="compDivider">
+                                        <div class="comp-handle"><i class="fa-solid fa-arrows-left-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="hint">Error Level Analysis (ELA) measures compression gradient anomalies. Splice boundaries and synthetic fills illuminate under high intensity boost.</p>
+                        </div>
+
+                        <!-- Tab 3: Metadata -->
+                        <div class="ftab-body hidden" id="tabExif">
+                            <table class="exif-table" id="exifTable"></table>
+                        </div>
+
                         <p class="details" id="detailsText">Ensemble score: 0.000000</p>
-                        <button class="btn btn-secondary" onclick="window.print()" style="margin-top: 1rem;"><i class="fa-solid fa-print"></i> Export Forensic Report</button>
+                        <button type="button" class="btn btn-secondary" onclick="window.print()" style="margin-top: 1rem;"><i class="fa-solid fa-print"></i> Export Forensic Report</button>
                     </div>
                 </div>
 
@@ -183,15 +505,59 @@
                 <div class="bulk-results-area hidden" id="bulkResultsArea">
                     <div class="bulk-progress-container hidden" id="bulkProgressContainer">
                         <div class="bulk-header">
-                            <h3>Bulk Analysis</h3>
-                            <span id="bulkProgressText">0 / 0</span>
+                            <div class="bulk-header-left">
+                                <h3>Bulk Media Forensics</h3>
+                                <span id="bulkProgressText">0 / 0</span>
+                            </div>
+                            <div class="bulk-header-right">
+                                <button type="button" class="btn btn-secondary btn-sm" id="batchExportBtn" onclick="exportCsv()">
+                                    <i class="fa-solid fa-file-csv"></i> Export Batch CSV
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="batchExportJsonBtn" onclick="exportJson()">
+                                    <i class="fa-solid fa-file-code"></i> Export Batch JSON
+                                </button>
+                            </div>
                         </div>
                         <div class="scanner-container">
                             <div class="scanner-bar" id="bulkProgressBar" style="animation: none; left: 0%; width: 0%; transition: width 0.3s;"></div>
                         </div>
                     </div>
+
                     <div class="bulk-grid-container hidden" id="bulkGridContainer">
-                        <h2 class="prediction-title">Results Grid</h2>
+                        <!-- Batch KPI Filter Bar -->
+                        <div class="bulk-toolbar">
+                            <div class="kpi-filter-bar">
+                                <button type="button" class="kpi-pill active" data-filter="all" id="kpiPillAll">
+                                    All (<span id="kpiAll">0</span>)
+                                </button>
+                                <button type="button" class="kpi-pill kpi-fake" data-filter="fake" id="kpiPillFake">
+                                    <i class="fa-solid fa-circle"></i> Deepfake / AI (<span id="kpiFake">0</span>)
+                                </button>
+                                <button type="button" class="kpi-pill kpi-neutral" data-filter="neutral" id="kpiPillNeutral">
+                                    <i class="fa-solid fa-circle"></i> Face Replaced (<span id="kpiNeutral">0</span>)
+                                </button>
+                                <button type="button" class="kpi-pill kpi-real" data-filter="real" id="kpiPillReal">
+                                    <i class="fa-solid fa-circle"></i> Authentic (<span id="kpiReal">0</span>)
+                                </button>
+                            </div>
+
+                            <div class="bulk-controls-row">
+                                <div class="bulk-search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" id="bulkSearchInput" placeholder="Filter by filename (e.g. c01280)..." class="bulk-search-input">
+                                </div>
+                                <div class="bulk-sort-wrapper">
+                                    <label for="bulkSortSelect"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort by:</label>
+                                    <select id="bulkSortSelect" class="bulk-sort-select">
+                                        <option value="risk-desc">Highest Fake Score First</option>
+                                        <option value="risk-asc">Lowest Fake Score First</option>
+                                        <option value="borderline">Uncertain / Borderline (40%–60%)</option>
+                                        <option value="name-asc">Filename (A–Z)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="results-grid" id="results-grid"></div>
                     </div>
                 </div>
@@ -199,18 +565,18 @@
         </div>
 
         <footer>
-            <p>Ensemble: Community Forensics (2025) · B-Free (2025) · Provenance Check</p>
+            <p>Ensemble: Community Forensics (2025) · B-Free (2025) · Provenance Check · GenD (2026)</p>
         </footer>
     </div>
 
-    <script src="/static/script.js"></script>
+    <!-- Full Detail Modal -->
     <div class="modal-backdrop hidden" id="detailModal" onclick="if(event.target===this)closeDetail()">
         <div class="modal glass-panel">
             <button class="modal-close" onclick="closeDetail()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
+
+    <script src="/static/script.js"></script>
 </body>
 </html>
-
-

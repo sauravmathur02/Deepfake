@@ -58,3 +58,11 @@ Thumbs.db
 *.pt
 *.bin
 *.zip
+*.safetensors
+pretrained_weights/
+
+# Caches & temporary uploads
+_hf_cache/
+test_samples/_hf_cache/
+UniversalFakeDetect/static/uploads/
+static/uploads/

@@ -1,0 +1,102 @@
+[
+  {
+    "filename": "Agent Image - Capture a man in his thirties mid-stride on an empty tree-lined asphalt road at early.png",
+    "prediction": "Fake",
+    "score": 0.99,
+    "confidence": "99.00%",
+    "faces_found": 2,
+    "category": null,
+    "details": null,
+    "explanation": {
+      "category": "AI-Generated (declared)",
+      "summary": "Very likely: this image is ai-generated (declared).",
+      "findings": [
+        "Embedded metadata/C2PA credentials explicitly declare this file as AI-generated.",
+        "The face-forensics model detected facial inconsistencies (blending boundaries, texture or identity artifacts) typical of a deepfake face-swap.",
+        "The Community Forensics model detected generator fingerprints in pixel statistics, typical of AI generation (GAN/diffusion models such as Midjourney, DALL-E or Stable Diffusion).",
+        "The B-Free/NPR model found synthetic pixel relationships and frequency artifacts, indicating AI inpainting or generation.",
+        "Compression (ELA) in the face area differs from the background (ratio 2.39), confirming a pasted or regenerated face."
+      ],
+      "likelihood": "Very likely"
+    },
+    "elapsed_sec": 3.22
+  },
+  {
+    "filename": "alina-chernovolova-O3AsfCJNFiY-unsplash.jpg",
+    "prediction": "Real",
+    "score": 0.331119,
+    "confidence": "66.89%",
+    "faces_found": 2,
+    "category": null,
+    "details": null,
+    "explanation": {
+      "category": "Authentic",
+      "summary": "This image appears authentic. All detectors remained below the manipulation threshold.",
+      "findings": [
+        "No generator fingerprints, diffusion noise patterns, or synthetic spectral signatures were found.",
+        "Detected facial anatomy, skin texture, and boundary blending appeared natural and consistent."
+      ],
+      "likelihood": "Unlikely to be manipulated"
+    },
+    "elapsed_sec": 4.0
+  },
+  {
+    "filename": "rosalie-gdy-XWexUCvZYow-unsplash.jpg",
+    "prediction": "Real",
+    "score": 0.067017,
+    "confidence": "93.30%",
+    "faces_found": 2,
+    "category": null,
+    "details": null,
+    "explanation": {
+      "category": "Authentic",
+      "summary": "This image appears authentic. All detectors remained below the manipulation threshold.",
+      "findings": [
+        "No generator fingerprints, diffusion noise patterns, or synthetic spectral signatures were found.",
+        "Detected facial anatomy, skin texture, and boundary blending appeared natural and consistent."
+      ],
+      "likelihood": "Unlikely to be manipulated"
+    },
+    "elapsed_sec": 4.7
+  },
+  {
+    "filename": "F.png",
+    "prediction": "Fake",
+    "score": 0.966184,
+    "confidence": "96.62%",
+    "faces_found": 1,
+    "category": null,
+    "details": null,
+    "explanation": {
+      "category": "Face Replaced / Swapped",
+      "summary": "Very likely: a face in this image has most likely been replaced or manipulated by AI.",
+      "findings": [
+        "The face-forensics model detected facial inconsistencies (blending boundaries, texture or identity artifacts) typical of a deepfake face-swap.",
+        "The Community Forensics model detected generator fingerprints in pixel statistics, typical of AI generation (GAN/diffusion models such as Midjourney, DALL-E or Stable Diffusion).",
+        "The B-Free/NPR model found synthetic pixel relationships and frequency artifacts, indicating AI inpainting or generation.",
+        "Compression (ELA) in the face area differs from the background (ratio 1.89), confirming a pasted or regenerated face."
+      ],
+      "likelihood": "Very likely"
+    },
+    "elapsed_sec": 2.44
+  },
+  {
+    "filename": "R.jpg",
+    "prediction": "Real",
+    "score": 0.000269,
+    "confidence": "99.97%",
+    "faces_found": 1,
+    "category": null,
+    "details": null,
+    "explanation": {
+      "category": "Authentic",
+      "summary": "This image appears authentic. All detectors remained below the manipulation threshold.",
+      "findings": [
+        "No generator fingerprints, diffusion noise patterns, or synthetic spectral signatures were found.",
+        "Detected facial anatomy, skin texture, and boundary blending appeared natural and consistent."
+      ],
+      "likelihood": "Unlikely to be manipulated"
+    },
+    "elapsed_sec": 2.68
+  }
+]

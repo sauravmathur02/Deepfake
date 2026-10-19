@@ -1,0 +1,1337 @@
+{
+  "summary": {
+    "Real Images": {
+      "correct": 34,
+      "total": 35,
+      "acc": 97.14285714285714
+    },
+    "Fake Images": {
+      "correct": 7,
+      "total": 30,
+      "acc": 23.333333333333332
+    },
+    "Real Videos": {
+      "correct": 16,
+      "total": 33,
+      "acc": 48.484848484848484
+    },
+    "Fake Videos": {
+      "correct": 20,
+      "total": 33,
+      "acc": 60.60606060606061
+    }
+  },
+  "total_accuracy": 58.778625954198475,
+  "results": [
+    {
+      "file": "dataset_real_11.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.018303,
+      "confidence": "98.17%",
+      "correct": true,
+      "elapsed": 2.4217779636383057
+    },
+    {
+      "file": "dataset_real_12.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 1.3e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3333656787872314
+    },
+    {
+      "file": "dataset_real_13.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.0,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.340010166168213
+    },
+    {
+      "file": "dataset_real_14.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.252523,
+      "confidence": "74.75%",
+      "correct": true,
+      "elapsed": 2.4151320457458496
+    },
+    {
+      "file": "dataset_real_15.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 1.9e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.2873449325561523
+    },
+    {
+      "file": "dataset_real_16.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 1.4e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3834052085876465
+    },
+    {
+      "file": "dataset_real_17.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.000195,
+      "confidence": "99.98%",
+      "correct": true,
+      "elapsed": 2.3658478260040283
+    },
+    {
+      "file": "dataset_real_18.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.001444,
+      "confidence": "99.86%",
+      "correct": true,
+      "elapsed": 2.4247653484344482
+    },
+    {
+      "file": "dataset_real_19.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 1.7e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.383443832397461
+    },
+    {
+      "file": "dataset_real_20.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 6.5e-05,
+      "confidence": "99.99%",
+      "correct": true,
+      "elapsed": 2.4200170040130615
+    },
+    {
+      "file": "dataset_real_21.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 8e-06,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.4050848484039307
+    },
+    {
+      "file": "dataset_real_22.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.001719,
+      "confidence": "99.83%",
+      "correct": true,
+      "elapsed": 2.395623207092285
+    },
+    {
+      "file": "dataset_real_23.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 2e-06,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.4002950191497803
+    },
+    {
+      "file": "dataset_real_24.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 2e-06,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.4041941165924072
+    },
+    {
+      "file": "dataset_real_25.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.713265,
+      "confidence": "71.33%",
+      "correct": false,
+      "elapsed": 2.3888673782348633
+    },
+    {
+      "file": "dataset_real_26.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 1e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.4002389907836914
+    },
+    {
+      "file": "dataset_real_27.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 5e-06,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3954660892486572
+    },
+    {
+      "file": "dataset_real_28.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 3.5e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3964099884033203
+    },
+    {
+      "file": "dataset_real_29.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 3.3e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.409442663192749
+    },
+    {
+      "file": "dataset_real_30.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 3e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3945066928863525
+    },
+    {
+      "file": "real_01_portrait_studio.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.000781,
+      "confidence": "99.92%",
+      "correct": true,
+      "elapsed": 2.4127004146575928
+    },
+    {
+      "file": "real_02_woman_portrait.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.219246,
+      "confidence": "78.08%",
+      "correct": true,
+      "elapsed": 2.4110891819000244
+    },
+    {
+      "file": "real_03_lifestyle_portrait.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 6.8e-05,
+      "confidence": "99.99%",
+      "correct": true,
+      "elapsed": 2.29410982131958
+    },
+    {
+      "file": "real_04_obama_official.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.00998,
+      "confidence": "99.00%",
+      "correct": true,
+      "elapsed": 2.490422010421753
+    },
+    {
+      "file": "real_05_biden_official.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.029496,
+      "confidence": "97.05%",
+      "correct": true,
+      "elapsed": 2.4579668045043945
+    },
+    {
+      "file": "real_06_kamala_official.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.005959,
+      "confidence": "99.40%",
+      "correct": true,
+      "elapsed": 2.3848562240600586
+    },
+    {
+      "file": "real_07_ford_official.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 7.8e-05,
+      "confidence": "99.99%",
+      "correct": true,
+      "elapsed": 2.401956081390381
+    },
+    {
+      "file": "real_08_einstein_photo.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.00415,
+      "confidence": "99.59%",
+      "correct": true,
+      "elapsed": 2.3788857460021973
+    },
+    {
+      "file": "real_09_trump_official.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.001729,
+      "confidence": "99.83%",
+      "correct": true,
+      "elapsed": 2.4000930786132812
+    },
+    {
+      "file": "real_10_wildlife_elephants.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.002707,
+      "confidence": "99.73%",
+      "correct": true,
+      "elapsed": 2.3775393962860107
+    },
+    {
+      "file": "unidata_1.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.001652,
+      "confidence": "99.83%",
+      "correct": true,
+      "elapsed": 2.402794599533081
+    },
+    {
+      "file": "unidata_2.jpeg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.025905,
+      "confidence": "97.41%",
+      "correct": true,
+      "elapsed": 2.3913755416870117
+    },
+    {
+      "file": "unidata_3.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.000345,
+      "confidence": "99.97%",
+      "correct": true,
+      "elapsed": 2.4019615650177
+    },
+    {
+      "file": "unidata_4.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.000475,
+      "confidence": "99.95%",
+      "correct": true,
+      "elapsed": 2.3897366523742676
+    },
+    {
+      "file": "unidata_5.jpg",
+      "category": "Real Images",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 3e-05,
+      "confidence": "100.00%",
+      "correct": true,
+      "elapsed": 2.3959906101226807
+    },
+    {
+      "file": "dataset_fake_11.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 9e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.3762965202331543
+    },
+    {
+      "file": "dataset_fake_12.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.000405,
+      "confidence": "99.96%",
+      "correct": false,
+      "elapsed": 2.2681899070739746
+    },
+    {
+      "file": "dataset_fake_13.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 7e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.3853299617767334
+    },
+    {
+      "file": "dataset_fake_14.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 7e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.2532498836517334
+    },
+    {
+      "file": "dataset_fake_15.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 5e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.3407933712005615
+    },
+    {
+      "file": "dataset_fake_16.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.002023,
+      "confidence": "99.80%",
+      "correct": false,
+      "elapsed": 2.3320374488830566
+    },
+    {
+      "file": "dataset_fake_17.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.000703,
+      "confidence": "99.93%",
+      "correct": false,
+      "elapsed": 2.2504231929779053
+    },
+    {
+      "file": "dataset_fake_18.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 6.4e-05,
+      "confidence": "99.99%",
+      "correct": false,
+      "elapsed": 2.4111082553863525
+    },
+    {
+      "file": "dataset_fake_19.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.318517,
+      "confidence": "68.15%",
+      "correct": false,
+      "elapsed": 2.250819444656372
+    },
+    {
+      "file": "dataset_fake_20.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 1.2e-05,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.314316511154175
+    },
+    {
+      "file": "dataset_fake_21.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.00212,
+      "confidence": "99.79%",
+      "correct": false,
+      "elapsed": 2.391425609588623
+    },
+    {
+      "file": "dataset_fake_22.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.001032,
+      "confidence": "99.90%",
+      "correct": false,
+      "elapsed": 2.4033308029174805
+    },
+    {
+      "file": "dataset_fake_23.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 1.3e-05,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.222135066986084
+    },
+    {
+      "file": "dataset_fake_24.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 4e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.410309314727783
+    },
+    {
+      "file": "dataset_fake_25.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.004963,
+      "confidence": "99.50%",
+      "correct": false,
+      "elapsed": 2.1644067764282227
+    },
+    {
+      "file": "dataset_fake_26.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 3e-06,
+      "confidence": "100.00%",
+      "correct": false,
+      "elapsed": 2.3926727771759033
+    },
+    {
+      "file": "dataset_fake_27.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.002361,
+      "confidence": "99.76%",
+      "correct": false,
+      "elapsed": 2.4027388095855713
+    },
+    {
+      "file": "dataset_fake_28.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.00081,
+      "confidence": "99.92%",
+      "correct": false,
+      "elapsed": 2.395571231842041
+    },
+    {
+      "file": "dataset_fake_29.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.007106,
+      "confidence": "99.29%",
+      "correct": false,
+      "elapsed": 2.4035913944244385
+    },
+    {
+      "file": "dataset_fake_30.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.000993,
+      "confidence": "99.90%",
+      "correct": false,
+      "elapsed": 2.3957672119140625
+    },
+    {
+      "file": "fake_01_ai_businesswoman.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.99,
+      "confidence": "99.00%",
+      "correct": true,
+      "elapsed": 2.503350257873535
+    },
+    {
+      "file": "fake_02_ai_grandfather.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.99,
+      "confidence": "99.00%",
+      "correct": true,
+      "elapsed": 2.559743642807007
+    },
+    {
+      "file": "fake_03_ai_street_cinematic.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.99,
+      "confidence": "99.00%",
+      "correct": true,
+      "elapsed": 2.4451794624328613
+    },
+    {
+      "file": "fake_04_deepfake_face_c01283.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.555261,
+      "confidence": "55.53%",
+      "correct": true,
+      "elapsed": 2.3554224967956543
+    },
+    {
+      "file": "fake_05_deepfake_face_c01284.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.237817,
+      "confidence": "76.22%",
+      "correct": false,
+      "elapsed": 2.420121908187866
+    },
+    {
+      "file": "fake_06_deepfake_face_c01285.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.000417,
+      "confidence": "99.96%",
+      "correct": false,
+      "elapsed": 2.4238598346710205
+    },
+    {
+      "file": "fake_07_deepfake_face_c01287.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.551086,
+      "confidence": "55.11%",
+      "correct": true,
+      "elapsed": 2.571368932723999
+    },
+    {
+      "file": "fake_08_deepfake_face_c01291.jpg",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.017014,
+      "confidence": "98.30%",
+      "correct": false,
+      "elapsed": 2.5767388343811035
+    },
+    {
+      "file": "fake_09_synthetic_face_F.png",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.941992,
+      "confidence": "94.20%",
+      "correct": true,
+      "elapsed": 2.349431276321411
+    },
+    {
+      "file": "fake_10_ai_generation_road.png",
+      "category": "Fake Images",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.99,
+      "confidence": "99.00%",
+      "correct": true,
+      "elapsed": 2.78267502784729
+    },
+    {
+      "file": "real_vid_01_walking_demographics.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.036692,
+      "confidence": "96.33%",
+      "correct": true,
+      "elapsed": 3.3406388759613037
+    },
+    {
+      "file": "real_vid_02_head_pose_detection.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.099467,
+      "confidence": "90.05%",
+      "correct": true,
+      "elapsed": 3.291975498199463
+    },
+    {
+      "file": "unidata_real_1.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.683589,
+      "confidence": "68.36%",
+      "correct": false,
+      "elapsed": 3.6130244731903076
+    },
+    {
+      "file": "unidata_real_2.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.589615,
+      "confidence": "58.96%",
+      "correct": false,
+      "elapsed": 4.6270294189453125
+    },
+    {
+      "file": "unidata_real_3.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.64751,
+      "confidence": "64.75%",
+      "correct": false,
+      "elapsed": 4.678720712661743
+    },
+    {
+      "file": "unidata_real_4.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.835308,
+      "confidence": "83.53%",
+      "correct": false,
+      "elapsed": 3.7487258911132812
+    },
+    {
+      "file": "unidata_real_5.MOV",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.577155,
+      "confidence": "57.72%",
+      "correct": false,
+      "elapsed": 3.1110775470733643
+    },
+    {
+      "file": "unidata_real_5.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.52543,
+      "confidence": "52.54%",
+      "correct": false,
+      "elapsed": 3.0396101474761963
+    },
+    {
+      "file": "vbench_01__exit_phone_room.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.108839,
+      "confidence": "89.12%",
+      "correct": true,
+      "elapsed": 4.592949390411377
+    },
+    {
+      "file": "vbench_01__hugging_happy.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.815911,
+      "confidence": "81.59%",
+      "correct": false,
+      "elapsed": 4.909423589706421
+    },
+    {
+      "file": "vbench_01__kitchen_pan.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.167281,
+      "confidence": "83.27%",
+      "correct": true,
+      "elapsed": 4.957111358642578
+    },
+    {
+      "file": "vbench_01__kitchen_still.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.149801,
+      "confidence": "85.02%",
+      "correct": true,
+      "elapsed": 4.763941526412964
+    },
+    {
+      "file": "vbench_01__meeting_serious.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.143216,
+      "confidence": "85.68%",
+      "correct": true,
+      "elapsed": 4.846855163574219
+    },
+    {
+      "file": "vbench_01__outside_talking_pan_laughing.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.66088,
+      "confidence": "66.09%",
+      "correct": false,
+      "elapsed": 4.631128549575806
+    },
+    {
+      "file": "vbench_01__outside_talking_still_laughing.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.655413,
+      "confidence": "65.54%",
+      "correct": false,
+      "elapsed": 4.975361347198486
+    },
+    {
+      "file": "vbench_01__podium_speech_happy.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.02025,
+      "confidence": "97.97%",
+      "correct": true,
+      "elapsed": 4.439611196517944
+    },
+    {
+      "file": "vbench_01__secret_conversation.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.029789,
+      "confidence": "97.02%",
+      "correct": true,
+      "elapsed": 4.8433005809783936
+    },
+    {
+      "file": "vbench_01__talking_against_wall.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.018298,
+      "confidence": "98.17%",
+      "correct": true,
+      "elapsed": 4.877419471740723
+    },
+    {
+      "file": "vbench_01__talking_angry_couch.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.802927,
+      "confidence": "80.29%",
+      "correct": false,
+      "elapsed": 4.788748264312744
+    },
+    {
+      "file": "vbench_01__walk_down_hall_angry.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.446536,
+      "confidence": "44.65%",
+      "correct": false,
+      "elapsed": 4.688868999481201
+    },
+    {
+      "file": "vbench_01__walking_and_outside_surprised.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": false,
+      "elapsed": 5.4323296546936035
+    },
+    {
+      "file": "vbench_01__walking_down_indoor_hall_disgust.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": false,
+      "elapsed": 4.837270975112915
+    },
+    {
+      "file": "vbench_01__walking_down_street_outside_angry.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.014246,
+      "confidence": "98.58%",
+      "correct": true,
+      "elapsed": 4.7617316246032715
+    },
+    {
+      "file": "vbench_01__walking_outside_cafe_disgusted.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.455083,
+      "confidence": "45.51%",
+      "correct": false,
+      "elapsed": 4.86987829208374
+    },
+    {
+      "file": "vbench_02__exit_phone_room.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.035649,
+      "confidence": "96.44%",
+      "correct": true,
+      "elapsed": 4.73935079574585
+    },
+    {
+      "file": "vbench_02__hugging_happy.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.699112,
+      "confidence": "69.91%",
+      "correct": false,
+      "elapsed": 4.8815062046051025
+    },
+    {
+      "file": "vbench_02__kitchen_pan.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.57211,
+      "confidence": "57.21%",
+      "correct": false,
+      "elapsed": 5.074903964996338
+    },
+    {
+      "file": "vbench_02__kitchen_still.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.200553,
+      "confidence": "79.94%",
+      "correct": true,
+      "elapsed": 5.236730337142944
+    },
+    {
+      "file": "vbench_real_01__exit_phone_room.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.108839,
+      "confidence": "89.12%",
+      "correct": true,
+      "elapsed": 4.556347370147705
+    },
+    {
+      "file": "vbench_real_01__hugging_happy.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Fake",
+      "score": 0.815911,
+      "confidence": "81.59%",
+      "correct": false,
+      "elapsed": 4.937074422836304
+    },
+    {
+      "file": "vbench_real_01__kitchen_pan.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.167281,
+      "confidence": "83.27%",
+      "correct": true,
+      "elapsed": 4.955358505249023
+    },
+    {
+      "file": "vbench_real_01__kitchen_still.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.149801,
+      "confidence": "85.02%",
+      "correct": true,
+      "elapsed": 4.752177476882935
+    },
+    {
+      "file": "vbench_real_01__meeting_serious.mp4",
+      "category": "Real Videos",
+      "expected": "Real",
+      "prediction": "Real",
+      "score": 0.143216,
+      "confidence": "85.68%",
+      "correct": true,
+      "elapsed": 4.8487548828125
+    },
+    {
+      "file": "fake_vid_01_ai_portrait_motion.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.602187,
+      "confidence": "60.22%",
+      "correct": true,
+      "elapsed": 3.1148650646209717
+    },
+    {
+      "file": "fake_vid_02_synthetic_face_motion.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.493761,
+      "confidence": "49.38%",
+      "correct": true,
+      "elapsed": 3.09700083732605
+    },
+    {
+      "file": "unidata_fake_1.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.644662,
+      "confidence": "64.47%",
+      "correct": true,
+      "elapsed": 3.827073335647583
+    },
+    {
+      "file": "unidata_fake_2.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.58581,
+      "confidence": "58.58%",
+      "correct": true,
+      "elapsed": 4.360772132873535
+    },
+    {
+      "file": "unidata_fake_3.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.624563,
+      "confidence": "62.46%",
+      "correct": true,
+      "elapsed": 3.0537431240081787
+    },
+    {
+      "file": "unidata_fake_4.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.758627,
+      "confidence": "75.86%",
+      "correct": true,
+      "elapsed": 2.9723334312438965
+    },
+    {
+      "file": "unidata_fake_5.mov",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.028327,
+      "confidence": "97.17%",
+      "correct": false,
+      "elapsed": 3.0856475830078125
+    },
+    {
+      "file": "unidata_fake_5.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.465226,
+      "confidence": "46.52%",
+      "correct": true,
+      "elapsed": 2.942816972732544
+    },
+    {
+      "file": "vbench_01_02__outside_talking_still_laughing__YVGY8LOK.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.658035,
+      "confidence": "65.80%",
+      "correct": true,
+      "elapsed": 4.633733034133911
+    },
+    {
+      "file": "vbench_01_02__walk_down_hall_angry__YVGY8LOK.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.077552,
+      "confidence": "92.24%",
+      "correct": false,
+      "elapsed": 4.49734902381897
+    },
+    {
+      "file": "vbench_01_03__hugging_happy__ISF9SP4G.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": true,
+      "elapsed": 4.83150315284729
+    },
+    {
+      "file": "vbench_01_03__podium_speech_happy__480LQD1C.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.468287,
+      "confidence": "46.83%",
+      "correct": true,
+      "elapsed": 4.469820976257324
+    },
+    {
+      "file": "vbench_01_03__talking_against_wall__JZUXXFRB.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.046572,
+      "confidence": "95.34%",
+      "correct": false,
+      "elapsed": 4.650681018829346
+    },
+    {
+      "file": "vbench_01_11__meeting_serious__9OM3VE0Y.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.146041,
+      "confidence": "85.40%",
+      "correct": false,
+      "elapsed": 4.802580833435059
+    },
+    {
+      "file": "vbench_01_11__secret_conversation__4OJNJLOO.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.004617,
+      "confidence": "99.54%",
+      "correct": false,
+      "elapsed": 4.842470169067383
+    },
+    {
+      "file": "vbench_01_11__talking_against_wall__9229VVZ3.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.053563,
+      "confidence": "94.64%",
+      "correct": false,
+      "elapsed": 4.847670316696167
+    },
+    {
+      "file": "vbench_01_11__walking_outside_cafe_disgusted__FAFWDR4W.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.470749,
+      "confidence": "47.07%",
+      "correct": true,
+      "elapsed": 4.906813144683838
+    },
+    {
+      "file": "vbench_01_12__outside_talking_pan_laughing__TNI7KUZ6.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.780698,
+      "confidence": "78.07%",
+      "correct": true,
+      "elapsed": 4.63554835319519
+    },
+    {
+      "file": "vbench_01_20__outside_talking_pan_laughing__OTGHOG4Z.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": true,
+      "elapsed": 4.9744462966918945
+    },
+    {
+      "file": "vbench_01_20__outside_talking_still_laughing__FW94AIMJ.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.654368,
+      "confidence": "65.44%",
+      "correct": true,
+      "elapsed": 4.741214990615845
+    },
+    {
+      "file": "vbench_01_21__walk_down_hall_angry__03X7CELV.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.072186,
+      "confidence": "92.78%",
+      "correct": false,
+      "elapsed": 4.58871865272522
+    },
+    {
+      "file": "vbench_01_27__hugging_happy__ZYCZ30C0.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": true,
+      "elapsed": 5.199230194091797
+    },
+    {
+      "file": "vbench_01_27__outside_talking_still_laughing__ZYCZ30C0.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.661266,
+      "confidence": "66.13%",
+      "correct": true,
+      "elapsed": 4.765406131744385
+    },
+    {
+      "file": "vbench_01_27__walking_outside_cafe_disgusted__ZYCZ30C0.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.491876,
+      "confidence": "49.19%",
+      "correct": true,
+      "elapsed": 4.867520809173584
+    },
+    {
+      "file": "vbench_02_01__secret_conversation__YVGY8LOK.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.138542,
+      "confidence": "86.15%",
+      "correct": false,
+      "elapsed": 4.6966712474823
+    },
+    {
+      "file": "vbench_02_03__walking_down_street_outside_angry__QH3Y0IG0.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.027523,
+      "confidence": "97.25%",
+      "correct": false,
+      "elapsed": 5.062458515167236
+    },
+    {
+      "file": "vbench_02_03__walking_outside_cafe_disgusted__QH3Y0IG0.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.198119,
+      "confidence": "80.19%",
+      "correct": false,
+      "elapsed": 4.619923114776611
+    },
+    {
+      "file": "vbench_02_06__podium_speech_happy__N8OSN8P6.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.04362,
+      "confidence": "95.64%",
+      "correct": false,
+      "elapsed": 4.570858955383301
+    },
+    {
+      "file": "vbench_fake_01_02__outside_talking_still_laughing__YVGY8LOK.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.658035,
+      "confidence": "65.80%",
+      "correct": true,
+      "elapsed": 4.782167673110962
+    },
+    {
+      "file": "vbench_fake_01_02__walk_down_hall_angry__YVGY8LOK.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.077552,
+      "confidence": "92.24%",
+      "correct": false,
+      "elapsed": 4.6057257652282715
+    },
+    {
+      "file": "vbench_fake_01_03__hugging_happy__ISF9SP4G.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.855,
+      "confidence": "85.50%",
+      "correct": true,
+      "elapsed": 4.965856552124023
+    },
+    {
+      "file": "vbench_fake_01_03__podium_speech_happy__480LQD1C.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Fake",
+      "score": 0.468287,
+      "confidence": "46.83%",
+      "correct": true,
+      "elapsed": 4.599621534347534
+    },
+    {
+      "file": "vbench_fake_01_03__talking_against_wall__JZUXXFRB.mp4",
+      "category": "Fake Videos",
+      "expected": "Fake",
+      "prediction": "Real",
+      "score": 0.046572,
+      "confidence": "95.34%",
+      "correct": false,
+      "elapsed": 4.776063919067383
+    }
+  ]
+}
